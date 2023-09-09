@@ -1831,7 +1831,7 @@ def test_hammerlock_integration(point, last_roll, strat_info, bets_before, dice_
         strategy.place_win_count = 1
     table.add_player(bankroll=float("inf"), strategy=strategy)  # ADD STRATEGY HERE
     table.players[0].bets = bets_before
-    table.dice.result = dice_result
+    table.dice.fixed_roll(dice_result)
     strategy.after_roll(table.players[0])
     TableUpdate().run_strategies(table)
     assert set(table.players[0].bets) == set(bets_after)

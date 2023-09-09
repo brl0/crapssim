@@ -787,7 +787,7 @@ def test_bet_allowed_point(bet, point_number, allowed):
     table = Table()
     table.add_player()
     dice = Dice()
-    dice.total = point_number
+    dice.fixed_total(point_number)
 
     point = Point()
     point.update(dice)

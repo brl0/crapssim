@@ -93,6 +93,11 @@ class DontPass(WinningLosingNumbersBet):
             return [7, 11]
         return [table.point.number]
 
+    def get_push_numbers(self, table: "Table") -> list[int]:
+        if table.point is None:
+            return [12]
+        return []
+
     def allowed(self, player: "Player") -> bool:
         if player.table.point.status == 'Off':
             return True
@@ -120,6 +125,11 @@ class DontCome(WinningLosingNumbersBet):
         if self.point is None:
             return [7, 11]
         return [self.point.number]
+
+    def get_push_numbers(self, table: "Table") -> list[int]:
+        if self.point is None:
+            return [12]
+        return []
 
     def update_point(self, player: 'Player'):
         if self.point.status == 'Off' and player.table.dice.total in (4, 5, 6, 8, 9, 10):

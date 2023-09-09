@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "crapssim"
+dynamic = ["version"]
+description = "Simulator for Craps with various betting strategies"
+readme = "README.md"
+license = ""
+requires-python = ">=3.6"
+authors = [
+    { name = "Sean Kent", email = "skent259@gmail.com" },
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    'numpy',
+]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/skent259/CrapsSim/issues"
+Homepage = "https://github.com/skent259/CrapsSim"
+
+[tool.hatch.version]
+path = "crapssim/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/crapssim",
+]
+
+[tool.ruff]
+ignore = [
+    "E501",
+    "F401",
+    "F403",
+    "F405",
+]

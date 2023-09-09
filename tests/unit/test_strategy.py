@@ -890,8 +890,7 @@ def test_hammerlock_lose_place_win_count_0(player):
     strategy = HammerLock(5)
     strategy.place_win_count = 2
     player.table.point.number = 6
-    player.table.dice.result = (3, 4)
-    player.table.dice.total = 7
+    player.table.dice.fixed_roll((3, 4))
     strategy.after_roll(player)
     assert strategy.place_win_count == 0
 
@@ -949,7 +948,7 @@ def test_hammerlock_always_add_dont_odds(player, place_win_count):
 def test_risk_12_player_won_field_bet(player):
     strategy = Risk12()
     player.bets = [Field(5)]
-    player.table.dice.total = 4
+    player.table.dice.fixed_total(4)
     strategy.after_roll(player)
     assert strategy.pre_point_winnings == 10
 
@@ -957,7 +956,7 @@ def test_risk_12_player_won_field_bet(player):
 def test_risk_12_player_won_double_field_bet(player):
     strategy = Risk12()
     player.bets = [Field(5)]
-    player.table.dice.total = 12
+    player.table.dice.fixed_total(12)
     strategy.after_roll(player)
     assert strategy.pre_point_winnings == 15
 
@@ -965,7 +964,7 @@ def test_risk_12_player_won_double_field_bet(player):
 def test_risk_12_player_won_pass_line_bet(player):
     strategy = Risk12()
     player.bets = [PassLine(5)]
-    player.table.dice.total = 7
+    player.table.dice.fixed_total(7)
     strategy.after_roll(player)
     assert strategy.pre_point_winnings == 10
 
@@ -973,7 +972,7 @@ def test_risk_12_player_won_pass_line_bet(player):
 def test_risk_12_player_won_pass_line_bet_and_field(player):
     strategy = Risk12()
     player.bets = [PassLine(5), Field(5)]
-    player.table.dice.total = 11
+    player.table.dice.fixed_total(11)
     strategy.after_roll(player)
     assert strategy.pre_point_winnings == 20
 
@@ -983,7 +982,7 @@ def test_risk_12_reset_prepoint_winnings(player):
     strategy.pre_point_winnings = 20
     player.table.point.number = 4
     player.bets = [PassLine(5)]
-    player.table.dice.total = 7
+    player.table.dice.fixed_total(7)
     strategy.after_roll(player)
     assert strategy.pre_point_winnings == 0
 
@@ -1017,7 +1016,7 @@ def test_dice_doctor_win_increase_progression(player):
     strategy = DiceDoctor()
     bet = Field(5)
     bet.get_status = MagicMock(return_value='win')
-    player.table.dice.total = 2
+    player.table.dice.fixed_total(2)
     player.bets = [bet]
     strategy.after_roll(player)
     assert strategy.current_progression == 1
@@ -1028,7 +1027,7 @@ def test_dice_doctor_lose_progression(player):
     strategy.current_progression = 4
     bet = Field(5)
     bet.get_status = MagicMock(return_value='lose')
-    player.table.dice.total = 7
+    player.table.dice.fixed_total(7)
     player.bets = [bet]
     strategy.after_roll(player)
     assert strategy.current_progression == 0

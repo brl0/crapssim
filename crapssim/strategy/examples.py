@@ -114,6 +114,22 @@ class TwoCome(CountStrategy):
         super().__init__((Come,), 2, bet)
 
 
+class NDontCome(CountStrategy):
+    """Strategy that adds a DontCome bet of a certain amount if that bet doesn't exist on the table.
+    Equivalent to CountStrategy((DontCome, ), 2, bet)."""
+
+    def __init__(self, n: int, bet_amount: float):
+        """If there are less than two DontCome bets placed, place a DontCome bet.
+
+        Parameters
+        ----------
+        bet_amount
+            Amount of the come bet.
+        """
+        bet = DontCome(bet_amount)
+        super().__init__((DontCome,), n, bet)
+
+
 class Pass2Come(AggregateStrategy):
     """Places a PassLine bet and two Come bets. Equivalent to BetPassLine(amount) +
     TwoCome(amount)"""

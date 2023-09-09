@@ -136,6 +136,9 @@ class WinningLosingNumbersBet(Bet, ABC):
     def get_losing_numbers(self, table: "Table") -> list[int]:
         pass
 
+    def get_push_numbers(self, table: "Table") -> list[int]:
+        return []
+
     @abstractmethod
     def get_payout_ratio(self, table: "Table") -> float:
         pass
@@ -146,6 +149,9 @@ class WinningLosingNumbersBet(Bet, ABC):
             should_remove = True
         elif table.dice.total in self.get_losing_numbers(table):
             result_amount = -1 * self.amount
+            should_remove = True
+        elif table.dice.total in self.get_push_numbers(table):
+            result_amount = self.amount
             should_remove = True
         else:
             result_amount = 0

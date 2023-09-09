@@ -898,9 +898,9 @@ from crapssim.table import Table, TableUpdate
         [Place(6, bet_amount=6.0), Place(8, bet_amount=6.0), PassLine(bet_amount=5.0), Field(bet_amount=5.0)]
     ),
     (
-        None, 7, {'winnings': 0}, 
+        None, 7, {'winnings': 0},
         [Place(6, bet_amount=6.0), Place(8, bet_amount=6.0)],
-        (3, 4), 
+        (3, 4),
         [Place(6, bet_amount=6.0), Place(8, bet_amount=6.0),
          PassLine(bet_amount=5.0), Field(bet_amount=5.0)]
     ),
@@ -1822,6 +1822,6 @@ def test_risk12_integration(point, last_roll, strat_info, bets_before, dice_resu
         strategy.pre_point_winnings = strat_info['winnings']
     table.add_player(bankroll=float("inf"), strategy=strategy)  # ADD STRATEGY HERE
     table.players[0].bets = copy.copy(bets_before)
-    table.dice.result = dice_result
+    table.dice.fixed_roll(dice_result)
     TableUpdate().run_strategies(table)
     assert table.players[0].bets == bets_after
