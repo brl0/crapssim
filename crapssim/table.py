@@ -71,6 +71,9 @@ class TableUpdate:
 
         if verbose:
             print(f"Point is {table.point.status} ({table.point.number})")
+            for player in table.players:
+                print(f"{player.name} bankroll: ${player.bankroll}, bets: ${player.total_bet_amount}")
+                print(f"{player.bets=}")
             print(f"Total Player Cash is ${table.total_player_cash}")
 
     @staticmethod

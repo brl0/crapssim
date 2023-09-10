@@ -4,6 +4,7 @@ from crapssim.bet import WinningLosingNumbersBet
 from crapssim.point import Point
 
 if typing.TYPE_CHECKING:
+    from crapssim.bet import BetResult
     from crapssim.table import Table, Player
 
 
@@ -27,9 +28,7 @@ class PassLine(WinningLosingNumbersBet):
         return True
 
     def allowed(self, player: "Player") -> bool:
-        if player.table.point.status == 'Off':
-            return True
-        return False
+        return player.table.point.status == 'Off'
 
 
 class Come(WinningLosingNumbersBet):
@@ -65,9 +64,7 @@ class Come(WinningLosingNumbersBet):
         return True
 
     def allowed(self, player: "Player") -> bool:
-        if player.table.point.status == 'On':
-            return True
-        return False
+        return player.table.point.status == 'On'
 
     def get_hash_key(self) -> typing.Hashable:
         return type(self), self.amount, self.point
@@ -94,14 +91,12 @@ class DontPass(WinningLosingNumbersBet):
         return [table.point.number]
 
     def get_push_numbers(self, table: "Table") -> list[int]:
-        if table.point is None:
+        if table.point.number is None:
             return [12]
         return []
 
     def allowed(self, player: "Player") -> bool:
-        if player.table.point.status == 'Off':
-            return True
-        return False
+        return player.table.point.status == 'Off'
 
 
 class DontCome(WinningLosingNumbersBet):
@@ -117,17 +112,17 @@ class DontCome(WinningLosingNumbersBet):
         return 1.0
 
     def get_winning_numbers(self, table: "Table") -> list[int]:
-        if self.point is None:
+        if self.point.number is None:
             return [2, 3]
         return [7]
 
     def get_losing_numbers(self, table: "Table") -> list[int]:
-        if self.point is None:
+        if self.point.number is None:
             return [7, 11]
         return [self.point.number]
 
     def get_push_numbers(self, table: "Table") -> list[int]:
-        if self.point is None:
+        if self.point.number is None:
             return [12]
         return []
 
@@ -137,9 +132,7 @@ class DontCome(WinningLosingNumbersBet):
             player.bets.append(DontCome(self.amount, player.table.dice.total))
 
     def allowed(self, player: "Player") -> bool:
-        if player.table.point.status == 'On':
-            return True
-        return False
+        return player.table.point.status == 'On'
 
     def get_hash_key(self):
         return type(self), self.amount, self.point
